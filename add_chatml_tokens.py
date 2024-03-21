@@ -6,9 +6,11 @@ import argparse
 # Set up argument parser
 parser = argparse.ArgumentParser(description='Load a model with the specified name.')
 parser.add_argument('--model', type=str, help='Model name', required=True)
+parser.add_argument('--output_dir', type=str, help='Output directory for the model and tokenizer', required=True)
 args = parser.parse_args()
 
 model_name = args.model
+output_dir = args.output_dir
 
 # Load model and tokenizer with the specified model name
 model = AutoModelForCausalLM.from_pretrained(model_name).half()
