@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Quantize and process a model with 
 parser.add_argument('model', type=str, help='The path to the model to be processed')
 args = parser.parse_args()
 model_name = args.model
-save_folder = model_name + "-bf16"
+save_folder = model_name + "-hf"
 
 print(f"Loading model {model_name} ...\n")
 model = AutoModelForCausalLM.from_pretrained(model_name)

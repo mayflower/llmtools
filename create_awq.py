@@ -5,13 +5,11 @@ import argparse
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description='Quantize and process a model with AWQ.')
-parser.add_argument('MODEL', type=str, help='The path to the model to be processed')
+parser.add_argument('--model', type=str, help='The path to the model to be processed')
 args = parser.parse_args()
-MODEL = args.MODEL
+model_path = args.model
 
-model_path = "./model"
-quant_name =  MODEL.split("/")[-1] + "-AWQ"
-quant_path = "awq/" + quant_name
+quant_name =  model_path.split("/")[-1] + "-AWQ"
 quant_config = { "zero_point": True, "q_group_size": 128, "w_bit": 4, "version": "GEMM" }
 
 #Load model
