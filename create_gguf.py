@@ -35,7 +35,7 @@ for method in QUANTIZATION_METHODS:
 
 # Create model card
 card = ModelCard.load(args.model)
-if not hasattr(card.data, "tags"):
+if card.data.tags is None:
     card.data.tags = []
 card.data.tags.append("gguf")
 card.save(f'{org_name}/{model_name}-GGUF/README.md')
