@@ -18,18 +18,15 @@ with subprocess.Popen(['huggingface-cli', 'download', "--local-dir", args.model,
     print("STDOUT:", stdout)
     print("STDERR:", stderr)
 os.mkdir(target_name)
+os.mkdir('./exl2')
 print(f"Converting {args.model} to {target_name} ...")
-with subprocess.Popen(['python', 'exllamav2/convert.py', '-i', args.model, '-o', target_name, "-c", 'wikitext-test.parquet', '-b', '5.0'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as proc:
-    stdout, stderr = proc.communicate()
-    print("STDOUT:", stdout)
-    print("STDERR:", stderr)
-shutil.rmtree(f"{target_name}/out_tensor")
-with subprocess.Popen(["rsync", '-av', "--exclude='*.safetensors'", "--exclude='.*'", args.model+"/", target_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as proc:
+with subprocess.Popen(['python', 'exllamav2/convert.py', '-i', args.model, '-cf', target_name, '-o', 'exl2', '-c', 'wikitext-test.parquet', '-b', '5.0'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as proc:
     stdout, stderr = proc.communicate()
     print("STDOUT:", stdout)
     print("STDERR:", stderr)
 
 shutil.rmtree(args.model)
+shutil.rmtree('./exl2')
 # Create model card
 card = ModelCard.load(args.model)
 if card.data.tags is None:
